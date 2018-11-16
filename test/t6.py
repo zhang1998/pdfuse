@@ -9,7 +9,8 @@ from matplotlib import  pyplot as plt
 img = cv2.imread('text.jpg')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2BGRA )
 
-ret,thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+adaptive_threshold = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
+                                           cv2.THRESH_BINARY_INV, 11, 2)
 
 kernel = np.ones((3,3),np.uint8)
 opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel,iterations=2)

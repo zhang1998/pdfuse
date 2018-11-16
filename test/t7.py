@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 '''
 识别与切割：切割出来的效果有些大
 '''
@@ -53,8 +54,14 @@ for fileName in os.listdir(base_dir):
     img = cv2.imread(base_dir + fileName)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     adaptive_threshold = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
-                                               cv2.THRESH_BINARY_INV, 11, 2)
+                                               cv2.THRESH_BINARY_INV, 11, 1)
 
+    '''
+    第三个值
+    第三个自适应方法Adaptive Method:
+    — cv2.ADAPTIVE_THRESH_MEAN_C ：领域内均值
+    —cv2.ADAPTIVE_THRESH_GAUSSIAN_C ：领域内像素点加权和，权 重为一个高斯窗口
+    '''
     horizontal_sum = np.sum(adaptive_threshold, axis=1)
     peek_ranges = extract_peek(horizontal_sum, min_val, min_range)
     line_seg_adaptive_threshold = np.copy(adaptive_threshold)
